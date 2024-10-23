@@ -1,0 +1,7 @@
+\beamer@sectionintoc {1}{Exercise 1: Entropy of a Random Variable with 3 Outcomes}{3}{0}{1}
+\beamer@sectionintoc {2}{Exercise 2: Entropy of a random variable from a data series}{8}{0}{2}
+\beamer@sectionintoc {3}{Exercise3}{16}{0}{3}
+\beamer@sectionintoc {4}{Exercise 4: Information Gain Ratio }{18}{0}{4}
+\beamer@sectionintoc {5}{Exercise 5: Kullback-Leibler divergence from empirical distribution}{26}{0}{5}
+\beamer@sectionintoc {6}{Exercise 6: Permutation Entropy Analysis}{32}{0}{6}
+\beamer@sectionintoc {7}{Exercise 7}{40}{0}{7}
