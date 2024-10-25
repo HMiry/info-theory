@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2024.10.22)  23 OCT 2024 11:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2024.10.22)  25 OCT 2024 22:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1360,12 +1360,71 @@ Overfull \vbox (22.96811pt too high) detected at line 59
 
 ] [41
 
+] [42
+
+] [43
+
+] [44
+
+] [45
+
+] [46
+
+] [47
+
+] [48
+
+] [49
+
+] [50
+
+] [51
+
+] [52
+
+] [53
+
+] [54
+
+]
+[55
+
+] [56
+
+] [57
+
+] [58
+
+] [59
+
+] [60
+
+] [61
+
+] [62
+
+]
+<images/Classifier.jpg, id=447, 322.806pt x 314.97675pt>
+File: images/Classifier.jpg Graphic file (type jpg)
+<use images/Classifier.jpg>
+Package pdftex.def Info: images/Classifier.jpg  used on input line 494.
+(pdftex.def)             Requested size: 199.1693pt x 194.34155pt.
+
+Overfull \vbox (34.57596pt too high) detected at line 494
+ []
+
+[63
+
+ <./images/Classifier.jpg>] [64
+
+] [65
+
 ])
 LaTeX Font Info:    Font shape `OT1/Crlt-OsF/m/sl' in size <14.4> not available
 
 (Font)              Font shape `OT1/Crlt-OsF/m/it' tried instead on input line 
 76.
- [42
+ [66
 
 ]
 \tf@nav=\write6
@@ -1381,20 +1440,14 @@ LaTeX Font Info:    Font shape `OT1/Crlt-OsF/m/sl' in size <14.4> not available
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `beamerpolito.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `beamerpolito.out':
-(rerunfilecheck)             Before: A8342CB932255F575B472D9119648B1D;1778
-(rerunfilecheck)             After:  24B9D1A1E5EDA7645E8058CBA8EB2F3E;1786.
+Package rerunfilecheck Info: File `beamerpolito.out' has not changed.
+(rerunfilecheck)             Checksum: 71D96CBA9A0DA77899F1BFB7B349DA78;2001.
  ) 
 Here is how much of TeX's memory you used:
- 26021 strings out of 475385
- 525555 string characters out of 2776434
- 806570 words of memory out of 3000000
- 46706 multiletter control sequences out of 15000+600000
+ 26124 strings out of 475385
+ 527166 string characters out of 2776434
+ 809473 words of memory out of 3000000
+ 46760 multiletter control sequences out of 15000+600000
  521436 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,13n,122p,675b,928s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -1415,9 +1468,9 @@ TeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Utente/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Utente/AppData/
 Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/Utente
 /AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on beamerpolito.pdf (42 pages, 1638918 bytes).
+Output written on beamerpolito.pdf (66 pages, 1707243 bytes).
 PDF statistics:
- 423 PDF objects out of 1000 (max. 8388607)
- 93 named destinations out of 1000 (max. 500000)
- 169 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 557 PDF objects out of 1000 (max. 8388607)
+ 141 named destinations out of 1000 (max. 500000)
+ 174 words of extra memory for PDF output out of 10000 (max. 10000000)
 

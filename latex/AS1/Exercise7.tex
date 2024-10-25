@@ -1,32 +1,534 @@
-\section{Exercise 7}
+\section{Exercise 7: Information Gain Ratio and Classifiers}
 
 \begin{frame}{Information Gain Ratio and Classifiers}
-\textbf{Description}
 
-In this exercise we create a classifier, implemented as a decision tree,
-using the principle of maximum information gain ratio. A decision tree classifier is an algorithm that classifies a vector of feaures using the following iterative steps for each node of the tree
+In this exercise we build a decision tree classifier using the principle of maximum information gain ratio. 
+
+A decision tree classifier is an algorithm that classifies a vector of feaures analyzing a single feature in each node and then outputting a class when it reaches a leaf node
+
+These kind of algorithms are built using a training set of vector, whose classes are known, in a way that they classify the vectors of the training set as right as possibile, even if it's not possibile to guarantee that every vector in the training set will be classified correctly
+
+Each categorical feaures is analysed only once in the tree, but numerical feautures can be analysed multiple times, using different threshold for comparison
+
+\end{frame}
+
+
+\begin{frame}{Selecting features}
+	
+When building a decision tree classifier, we must choose a feature to analyse at each node and, in the case of numerical features, also a threshold to use for comparison
+
+Using the information gain ratio, we made the choice in order to gain the maximum amount of information about the resulting class at each step
+
+The class and the features are treated like random variables, whose outcomes have probabilities calculated considering the occurrencies of the values in the training data set
+
+The information gain ratio is calculated using this formula 
+
+\[ 
+IG(C|X_n) = \frac{H(C) - H(C|X_n)}{H(X_n)}
+\]
+
+The value is normalized with respect to the entropy of the feature, to failry compare features with different number of outcomes
+
+\end{frame}
+
+
+
+\begin{frame}{Building a decision tree}
+	
+To select the feature to analyze at each node, we follow this iterative process
 
 \begin{itemize}
 	
-	\item If all the vector in the training set belong to the same class
+	\item If all the vector in the training set belong to the same class, that is a leaf and the value of that class is returned
 	
-	\item For each node, it analyzes a single feature and moves on the next node based on the result of the analysis. If the feature has limited number of possibile values, a branch is created for each value. If the feature has a numerical value, the value is compared with a threshold and a branch is created for each result of the comparison
+	\item If no more feature can be analyzed and the vectors of the training set belong to different classes, return the class which is more common among the training vectors
 	
-	\item If all the vector in the training set 
-
-
+	\item We calculate the normalized information gain of the class relative to each feature and, in the case of numerical features, for each possibile threshold
+	
+	\item We select the feature, and eventually the threshold, that have the highest information gain ratio
+	
+	\item We create branches for each value of the feature chosen, or for each result of the comparison of the feature with the threshold. To each branch is assigned a split of the training set made by all the vector whose values of the feature satisfy the subtree condition and we repeat the process for each subtree
+	
 
 \end{itemize}
 
-analyzing a single feature in each node and moving on the next node based on the result of the analysis, until a leaf
+\end{frame}
 
-This principle states that the features
+
+\begin{frame}{Training set}
+	
+We build our classifier using the provided training set. The first and third features are numerical, while the second one can only assume the value of 0 and 1
+
+\begin{center}
+\begin{tabular}{c|c|c|c}
+	$x_1$ & $x_2$ & $x_3$ & C \\
+	20 & 0 & 10 & 0 \\
+	20 & 0 & 70 & 0 \\
+	20 & 1 & 20 & 1 \\
+	20 & 1 & 80 & 0 \\
+	40 & 0 & 40 & 1 \\
+	40 & 1 & 60 & 1 \\
+	40 & 1 & 50 & 1 \\
+	20 & 0 & 60 & 0 \\
+	60 & 1 & 60 & 1 \\
+
+\end{tabular}
+\end{center}
+	
 
 \end{frame}
 
-The principle of maximum 
-
-
-\begin{frame}
+\begin{frame}{Class and features entropy}
+	
+	The first thing we do is calculate the entropy of the class and the entropy of every feature on the whole training set
+	
+	\[
+		H(C) = - \frac{4}{9} * log2\left(\frac{4}{9}\right) 
+		- \frac{5}{9} * log2\left(\frac{5}{9}\right) = 0.9911
+	\]
+	\[ 	H(x_1) = - \frac{5}{9} * log2\left(\frac{5}{9}\right)
+	- \frac{3}{9} * log2\left(\frac{3}{9}\right)
+	- \frac{1}{9} * log2\left(\frac{1}{9}\right) = 1.3516
+	\]
+	\[ 	H(x_2) = - \frac{4}{9} * log2\left(\frac{4}{9}\right)
+	- \frac{5}{9} * log2\left(\frac{5}{9}\right) = 0.9911
+	\]
+	\[ 	H(x_3) = - 6 * \frac{1}{9} * log2\left(\frac{1}{9}\right)
+	- \frac{3}{9} * log2\left(\frac{3}{9}\right) = 2.6416
+	\]
+	
 	
 \end{frame}
+
+\begin{frame}{First feature information gain ratio}
+	
+	The first feature has two thresholds: 30 and 50
+	
+	The information gain ratio for the threshold 30 is
+	
+	\[ 
+		H(C|x_1 < 30) = - \frac{4}{5} * log2\left(\frac{4}{5}\right) 
+		- \frac{1}{5} * log2\left(\frac{1}{5}\right) = 0.7219
+	\]
+	
+	\[ 
+		H(C|x_1 > 30) = 0
+	 \]
+	 
+	 \[ 
+	 	H(C|x_1) = \frac{5}{9} * H(C|x_1 < 30) + \frac{4}{9} * H(C|x_1 > 30) = 0.4011 
+	 \]
+	 
+	 \[ 
+	 	Ig(C|x_1) = \frac{H(C) - H(C|x_1)}{H(x_1)} = 0.4365
+	  \]
+	
+\end{frame}
+
+\begin{frame}{First feature information gain ratio}
+	
+	The information gain ratio for the threshold 50 is
+	
+	\[ 
+		H(C|x_1 < 50) = - \frac{4}{8} * log2\left(\frac{4}{8}\right) 
+		- \frac{4}{8} * log2\left(\frac{4}{8}\right) = 1
+	\]
+	
+	\[ 
+		H(C|x_1 > 50) = 0
+	\]
+	
+	\[ 
+		H(C|x_1) = \frac{8}{9} * H(C|x_1 < 50) + \frac{1}{9} * H(C|x_1 > 50) = \frac{8}{9}  = 0.8889
+	\]
+	
+	\[ 
+		Ig(C|x_1) = \frac{H(C) - H(C|x_1)}{H(x_1)} = 0.0756
+	\]
+	
+\end{frame}
+
+\begin{frame}{Second feature information gain ratio}
+	
+	The information gain ratio for the second feature is
+	
+	\[ 
+		H(C|x_2 = 0) = - \frac{3}{4} * log2\left(\frac{3}{4}\right) 
+		- \frac{1}{4} * log2\left(\frac{1}{4}\right) = 0.8113
+	\]
+	\[ 
+		H(C|x_2 = 1) = - \frac{4}{5} * log2\left(\frac{4}{5}\right) 
+		- \frac{1}{5} * log2\left(\frac{1}{5}\right) = 0.7219
+	\]
+	\[ 
+		H(C|x_2) = \frac{4}{9} * H(C|x_2 = 0) +
+		 \frac{5}{9} * H(C|x_2 = 1) = 0.7616
+	\]
+	
+	\[ 
+		Ig(C|x_2) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.2315
+	\]
+	
+	
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The third feature has 6 thresholds: 15, 30, 45, 55, 65 and 75
+	
+	The information gain ratio for the threshold 15 is
+	
+	\[ 
+		H(C|x_3 < 15) = 0
+	\]
+	
+	\[ 
+		H(C|x_3 > 15) = - \frac{3}{8} * log2\left(\frac{3}{8}\right) 
+		- \frac{5}{8} * log2\left(\frac{5}{8}\right) = 0.9544
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{1}{9} * H(C|x_3 < 15) + \frac{8}{9} * H(C|x_3 > 15) 	= 0.8484
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 0.0540
+	\]
+
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 30 is
+	
+	\[ 
+		H(C|x_3 < 30) = - log2\left(\frac{1}{2}\right) = 1
+	\]
+	
+	\[ 
+		H(C|x_3 > 30) = - \frac{3}{7} * log2\left(\frac{3}{7}\right) 
+		- \frac{4}{7} * log2\left(\frac{4}{7}\right) = 0.9852
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{2}{9} * H(C|x_3 < 30) + \frac{7}{9} * H(C|x_3 > 30) 		= 0.9885
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 9.711 * 10^{-4}
+	\]
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 45 is
+	
+	\[ 
+		H(C|x_3 < 45)  = - \frac{1}{3} * log2\left(\frac{1}{3}\right) 
+		 - \frac{2}{3} * log2\left(\frac{2}{3}\right) = 0.9183
+	\]
+	
+	\[ 
+		H(C|x_3 > 45) = - \frac{3}{6} * log2\left(\frac{3}{6}\right) 
+		- \frac{3}{6} * log2\left(\frac{3}{6}\right) = 1
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{3}{9} * H(C|x_3 < 45) + \frac{6}{9} * H(C|x_3 > 45) 		= 0.9728
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 0.0069
+	\]
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 55 is
+	
+	\[ 
+		H(C|x_3 < 55)  = - \frac{3}{4} * log2\left(\frac{3}{4}\right) 
+		- \frac{1}{4} * log2\left(\frac{1}{4}\right) = 0.8133
+	\]
+	
+	\[ 
+		H(C|x_3 > 55) = - \frac{3}{5} * log2\left(\frac{3}{5}\right) 
+		- \frac{2}{5} * log2\left(\frac{2}{5}\right) = 0.9710
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{4}{9} * H(C|x_3 < 45) + \frac{5}{9} * H(C|x_3 > 45) 
+		= 0.9
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 0.0345
+	\]
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 65 is
+	
+	\[ 
+		H(C|x_3 < 65)  = - \frac{2}{7} * log2\left(\frac{2}{7}\right) 
+		- \frac{5}{7} * log2\left(\frac{5}{7}\right) = 0.8631
+	\]
+	
+	\[ 
+		H(C|x_3 > 65) = 0
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{7}{9} * H(C|x_3 < 65) + \frac{2}{9} * H(C|x_3 > 65) 
+		= 0.6713
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 0.1210
+	\]
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 75 is
+	
+	\[ 
+		H(C|x_3 < 75)  = - \frac{3}{8} * log2\left(\frac{3}{8}\right) 
+		- \frac{5}{8} * log2\left(\frac{5}{8}\right) = 0.9544
+	\]
+	
+	\[ 
+		H(C|x_3 > 75) = 0
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{8}{9} * H(C|x_3 < 75) + \frac{1}{9} * H(C|x_3 > 75) 
+		= 0.8484
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_3)}{H(x_3)} = 0.0540
+	\]
+\end{frame}
+
+\begin{frame}{First node feature choice}
+	
+	The highest information gain ratio is the one of the first feature with threshold 30, so that will be the first node of the classifier
+	
+	
+	
+	All the vector of the training set split on the right part of the node belog to the same class, so that is a leaf and the class 1 is returned
+	
+	We now apply the iterative procedure to the left split of the training set
+	
+\begin{center}
+	\begin{tabular}{c|c|c|c}
+		$x_1$ & $x_2$ & $x_3$ & C \\
+		20 & 0 & 10 & 0 \\
+		20 & 0 & 70 & 0 \\
+		20 & 1 & 20 & 1 \\
+		20 & 1 & 80 & 0 \\
+		20 & 0 & 60 & 0 \\
+	\end{tabular}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Class and features entropy}
+	We calculate the class and features entropy on the new training set
+	
+	\[
+		H(C) = - \frac{4}{5} * log2\left(\frac{4}{5}\right) 
+		- \frac{1}{5} * log2\left(\frac{1}{5}\right) = 0.7219
+	\]
+	\[ 	H(x_1) = 0
+	\]
+	\[ 	H(x_2) = - \frac{3}{5} * log2\left(\frac{3}{5}\right)
+	- \frac{2}{5} * log2\left(\frac{2}{5}\right) = 0.9710
+	\]
+	\[ 	H(x_3) = - log2\left(\frac{1}{5}\right) = 2.3219
+	\]
+	
+\end{frame}
+
+\begin{frame}{Second feature information gain ratio}
+	
+	\[ 
+		H(C|x_2 = 0) = 0
+	\]
+	
+	\[ 
+		H(C|x_2 = 1) = - log2\left(\frac{1}{2}\right) = 1
+	\]
+	
+	\[ 
+		H(C|x_2) = \frac{3}{5} * H(C|x_2 = 0) +
+		\frac{2}{5} * H(C|x_2 = 1) = 0.4
+	\]
+
+	\[ 
+		Ig(C|x_2) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.3316
+	\]
+	
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The thrid feature has four thresholds: 15, 40, 65, 75
+	
+	The information gain ratio for the threshold 15 is
+	
+	\[ 
+		H(C|x_3 < 15) = 0
+	\]
+
+	\[ 
+		H(C|x_3 > 15) = - \frac{3}{4} * log2\left(\frac{3}{4}\right)
+		- \frac{1}{4} * log2\left(\frac{1}{4}\right) = 0.8113
+	\]
+
+	\[ 
+		H(C|x_3) = \frac{1}{5} * H(C|x_3 < 15) +
+		\frac{4}{5} * H(C|x_3 > 15) = 0.6490
+	\]
+
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.0314
+	\]
+	
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 40 is
+	
+	\[ 
+		H(C|x_3 < 40) = - log2\left(\frac{1}{2}\right) = 1
+	\]
+	
+	\[ 
+		H(C|x_3 > 40) = 0
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{2}{5} * H(C|x_3 < 40) +
+		\frac{3}{5} * H(C|x_3 > 40) = 0.4
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.1386
+	\]
+	
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 65 is
+	
+	\[ 
+		H(C|x_3 < 65) = - \frac{2}{3} * log2 \left(\frac{2}{3}\right)
+		- \frac{1}{3} * log2 \left(\frac{1}{3}\right) = 0.9183
+	\]
+	
+	\[ 
+		H(C|x_3 > 65) = 0
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{3}{5} * H(C|x_3 < 65) +
+		\frac{2}{5} * H(C|x_3 > 65) = 0.5510
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.0736
+	\]
+	
+\end{frame}
+
+\begin{frame}{Third feature information gain ratio}
+	
+	The information gain ratio for the threshold 75 is
+	
+	\[ 
+		H(C|x_3 < 75) = - \frac{3}{4} * log2 \left(\frac{3}{4}\right)
+		- \frac{1}{4} * log2 \left(\frac{1}{4}\right) = 0.8113
+	\]
+	
+	\[ 
+		H(C|x_3 > 75) = 0
+	\]
+	
+	\[ 
+		H(C|x_3) = \frac{4}{5} * H(C|x_3 < 75) +
+		\frac{1}{5} * H(C|x_3 > 75) = 0.6490
+	\]
+	
+	\[ 
+		Ig(C|x_3) = \frac{H(C) - H(C|x_2)}{H(x_2)} = 0.0314
+	\]
+	
+\end{frame}
+
+\begin{frame}{Second and thrid nodes feature choice}
+	
+	The highest information gain ratio is the one of the second feature, so that will be the second node of the classifier. All the vector on the left side of the tree belog to the same class, so that is a leaf and the class 0 is returned
+	
+	On the right side there are just two vector, which belong to two different classes, whose only differing feature is the third one, so that is the only possible choice. The threshold used is 50, the average of the two feature values
+	
+	The resulting two nodes have only one vecor each, so they are leaf and the class of the vector is returned
+	
+	
+\end{frame}
+
+\begin{frame}{Classifier plot}
+	
+	\centering This is the plot of the resulting classifier
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.50\linewidth]{images/Classifier.jpg}
+	\end{figure}
+	
+	
+\end{frame}
+
+\begin{frame}{Vectors classification}
+	
+	The classifier is implemented in the Classifier.m matlab code file. It correctly classifies each vector of the training set. This follows from the fact that for each leaf all the training vector of that leaf belong to the same class, so there are no leaf that return values according to the majority rule, which would result in certain error for at least one training set vector. The classifier can be used to classify arbitrary vector that don't belong to the training set. Here are some example of classfication of random vectors
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c}
+			$x_1$ & $x_2$ & $x_3$ & C \\
+			10 & 0 & 75 & 0 \\
+			35 & 1 & 90 & 1 \\
+			15 & 1 & 45 & 1 \\
+			5 & 1 & 75 & 0 
+		\end{tabular}
+	\end{center}
+	
+\end{frame}
+
+\begin{frame}{Confusion matrix}
+	
+	The confusion matrix of a classifier is a matrix that contains information about how good is the classifier and how many error it makes, which is why is also called error matrix
+	
+	Each row of the matrix represent a real value of the class of a vector, while each coloumn represent a predicted value of the class of a vector
+	
+	The $(i,j)$ value of the matrix is the number of vector of class $i$ that are being classified as class $j$ by the classifier. It follows that the elements on the diagonal of the confusion matrix are the number of vectors that have been classified correctly, for each possibile value of the class, while the others are the vector that have been classified incorrectly
+	
+	The confusion matrix of our decision tree classifier is 
+	
+	\[ 
+		\begin{bmatrix}
+		4 & 0 \\
+		0 & 5 
+		\end{bmatrix}
+	\]
+	
+
+	
+	
+	
+\end{frame}
+
