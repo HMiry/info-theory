@@ -47,7 +47,7 @@ To select the feature to analyze at each node, we follow this iterative process
 	
 	\item We select the feature, and eventually the threshold, that have the highest information gain ratio
 	
-	\item We create branches for each value of the feature chosen, or for each result of the comparison of the feature with the threshold. To each branch is assigned a split of the training set made by all the vector whose values of the feature satisfy the subtree condition and we repeat the process for each subtree
+	\item We create branches for each value of the feature chosen, or for each result of the comparison of the feature with the threshold. To each branch is assigned a split of the training set made by all the vectors whose values of the feature satisfy the subtree condition and we repeat the process for each subtree
 	
 
 \end{itemize}
@@ -257,7 +257,7 @@ We build our classifier using the provided training set. The first and third fea
 	\]
 	
 	\[ 
-		H(C|x_3) = \frac{4}{9} * H(C|x_3 < 45) + \frac{5}{9} * H(C|x_3 > 45) 
+		H(C|x_3) = \frac{4}{9} * H(C|x_3 < 55) + \frac{5}{9} * H(C|x_3 > 55) 
 		= 0.9
 	\]
 	
@@ -316,9 +316,7 @@ We build our classifier using the provided training set. The first and third fea
 	
 	The highest information gain ratio is the one of the first feature with threshold 30, so that will be the first node of the classifier
 	
-	
-	
-	All the vector of the training set split on the right part of the node belog to the same class, so that is a leaf and the class 1 is returned
+	All the vectors of the training set split on the right part of the node belog to the same class, so that is a leaf and the class 1 is returned
 	
 	We now apply the iterative procedure to the left split of the training set
 	
@@ -470,13 +468,13 @@ We build our classifier using the provided training set. The first and third fea
 	
 \end{frame}
 
-\begin{frame}{Second and thrid nodes feature choice}
+\begin{frame}{Second and third nodes feature choice}
 	
-	The highest information gain ratio is the one of the second feature, so that will be the second node of the classifier. All the vector on the left side of the tree belog to the same class, so that is a leaf and the class 0 is returned
+	The highest information gain ratio is the one of the second feature, so that will be the second node of the classifier. All the vectors on the left side of the tree belong to the same class, so that is a leaf and the class 0 is returned
 	
-	On the right side there are just two vector, which belong to two different classes, whose only differing feature is the third one, so that is the only possible choice. The threshold used is 50, the average of the two feature values
+	On the right side there are just two vectors, which belong to two different classes, whose only differing feature is the third one, so that is the only possible choice. The threshold used is 50, the average of the two feature values
 	
-	The resulting two nodes have only one vecor each, so they are leaf and the class of the vector is returned
+	The resulting two nodes have only one vecor each, so they are leaves and the class of the vector is returned
 	
 	
 \end{frame}
@@ -495,7 +493,7 @@ We build our classifier using the provided training set. The first and third fea
 
 \begin{frame}{Vectors classification}
 	
-	The classifier is implemented in the Classifier.m matlab code file. It correctly classifies each vector of the training set. This follows from the fact that for each leaf all the training vector of that leaf belong to the same class, so there are no leaf that return values according to the majority rule, which would result in certain error for at least one training set vector. The classifier can be used to classify arbitrary vector that don't belong to the training set. Here are some example of classfication of random vectors
+	The classifier is implemented in the Classifier.m matlab code file. It correctly classifies each vector of the training set. This follows from the fact that for each leaf all the training vectors of that leaf belong to the same class, so there are no leaves that return values according to the majority rule, which would result in certain error for at least one training set vector. The classifier can be used to classify arbitrary vectors that don't belong to the training set. Here are some example of classfication of random vectors
 	
 	\begin{center}
 		\begin{tabular}{c|c|c|c}
