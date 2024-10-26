@@ -7,7 +7,7 @@ else
     if v(2) == 0
         class = 0
     else
-        if v(3) < 40
+        if v(3) < 50
             class = 1
         else
             class = 0
