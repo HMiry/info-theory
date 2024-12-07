@@ -1,0 +1,133 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4079,        125]
+NotebookOptionsPosition[      3512,        107]
+NotebookOutlinePosition[      3904,        123]
+CellTagsIndexPosition[      3861,        120]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"a", "=", "2"}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"Lower", " ", "bound"}], "*)"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"b", "=", "5"}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"Upper", " ", "bound"}], "*)"}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Define", " ", "the", " ", "Heaviside", " ", "step", " ", "function"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"u", "[", "x_", "]"}], ":=", 
+   RowBox[{"UnitStep", "[", "x", "]"}]}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Define", " ", "the", " ", "original", " ", "PDF", " ", "using", " ", 
+    "the", " ", "Heaviside", " ", "step", " ", "function"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fX", "[", "x_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"u", "[", 
+       RowBox[{"x", "-", "a"}], "]"}], "-", 
+      RowBox[{"u", "[", 
+       RowBox[{"x", "-", "b"}], "]"}]}], ")"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"b", "-", "a"}], ")"}]}]}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "Define", " ", "the", " ", "differential", " ", "entropy", " ", "formula", 
+    " ", "numerically", " ", "within", " ", "the", " ", 
+    RowBox[{"support", "[", 
+     RowBox[{"a", ",", "b"}], "]"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hX", ":=", 
+   RowBox[{"-", 
+    RowBox[{"NIntegrate", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"fX", "[", "x", "]"}], "*", 
+       RowBox[{"Log2", "[", 
+        RowBox[{"fX", "[", "x", "]"}], "]"}]}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "a", ",", "b"}], "}"}]}], "]"}]}]}], "\n", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Compute", " ", "the", " ", "differential", " ", "entropy"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"entropyResult", "=", "hX"}], "\n", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Display", " ", "the", " ", "numerical", " ", "result"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", 
+  RowBox[{"\"\<Differential Entropy (Numerical): \>\"", ",", 
+   RowBox[{"N", "[", "entropyResult", "]"}]}], "]"}], "\n"}], "Input",
+ CellChangeTimes->{{3.942409004585017*^9, 
+  3.942409016325889*^9}},ExpressionUUID->"f245b97f-7035-4627-9d51-\
+217866249a3a"],
+
+Cell[BoxData["1.5849625007211579`"], "Output",
+ CellChangeTimes->{3.94240900678063*^9},
+ CellLabel->"Out[77]=",ExpressionUUID->"d42187c3-b7d8-4d3b-bf42-50dc0add35d8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Differential Entropy (Numerical): \"\>", "\[InvisibleSpace]", 
+   "1.5849625007211579`"}],
+  SequenceForm["Differential Entropy (Numerical): ", 1.5849625007211579`],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.942409006781928*^9},
+ CellLabel->
+  "During evaluation of \
+In[72]:=",ExpressionUUID->"ab90ba57-1aae-4a5d-9be6-05bd0b9e1386"]
+}, Open  ]]
+},
+WindowSize->{1470, 890},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.1 for Mac OS X ARM (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"09fc1110-9dc7-419a-94ff-65f375c6b525"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 2357, 67, 376, "Input",ExpressionUUID->"f245b97f-7035-4627-9d51-217866249a3a"],
+Cell[2936, 91, 166, 2, 33, "Output",ExpressionUUID->"d42187c3-b7d8-4d3b-bf42-50dc0add35d8"],
+Cell[3105, 95, 391, 9, 23, "Print",ExpressionUUID->"ab90ba57-1aae-4a5d-9be6-05bd0b9e1386"]
+}, Open  ]]
+}
+]
+*)
+

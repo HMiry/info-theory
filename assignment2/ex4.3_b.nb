@@ -1,0 +1,122 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      3733,        112]
+NotebookOptionsPosition[      3165,         94]
+NotebookOutlinePosition[      3558,        110]
+CellTagsIndexPosition[      3515,        107]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Define", " ", "the", " ", "shape", " ", "parameter", " ", "n"}], 
+   "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"n", "=", "5"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Shape", " ", "parameter"}], "*)"}], "\[IndentingNewLine]", "\n", 
+   
+   RowBox[{"(*", 
+    RowBox[{
+    "Define", " ", "the", " ", "Gamma", " ", "distribution", " ", "PDF"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"fX", "[", "x_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"1", "/", 
+       RowBox[{"Gamma", "[", "n", "]"}]}], ")"}], "*", 
+     RowBox[{"x", "^", 
+      RowBox[{"(", 
+       RowBox[{"n", "-", "1"}], ")"}]}], "*", 
+     RowBox[{"Exp", "[", 
+      RowBox[{"-", "x"}], "]"}], "*", 
+     RowBox[{"UnitStep", "[", "x", "]"}]}]}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Define", " ", "the", " ", "differential", " ", "entropy", " ", 
+     "formula"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"hX", ":=", 
+    RowBox[{"-", 
+     RowBox[{"NIntegrate", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"fX", "[", "x", "]"}], "*", 
+        RowBox[{"Log2", "[", 
+         RowBox[{"fX", "[", "x", "]"}], "]"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "0", ",", "Infinity"}], "}"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Compute", " ", "the", " ", "differential", " ", "entropy", " ", 
+     "numerically"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"entropyResult", "=", "hX"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Display", " ", "the", " ", "numerical", " ", "result"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<Differential Entropy (Numerical): \>\"", ",", 
+     RowBox[{"N", "[", "entropyResult", "]"}]}], "]"}], "\n"}]}]], "Input",
+ CellChangeTimes->{{3.942409537797035*^9, 3.942409537799798*^9}},
+ CellLabel->"In[84]:=",ExpressionUUID->"2fcac8a1-e787-43fe-8839-da985cca7134"],
+
+Cell[BoxData["3.106963740131177`"], "Output",
+ CellChangeTimes->{3.942409539471754*^9},
+ CellLabel->"Out[87]=",ExpressionUUID->"054d70b2-e9c6-4b91-b987-84c89ff909ff"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Differential Entropy (Numerical): \"\>", "\[InvisibleSpace]", 
+   "3.106963740131177`"}],
+  SequenceForm["Differential Entropy (Numerical): ", 3.106963740131177],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9424095394726067`*^9},
+ CellLabel->
+  "During evaluation of \
+In[84]:=",ExpressionUUID->"234cbaad-55a3-4a90-ba8c-0e9aa1734251"]
+}, Open  ]]
+},
+WindowSize->{808, 790},
+WindowMargins->{{12, Automatic}, {Automatic, 24}},
+FrontEndVersion->"14.1 for Mac OS X ARM (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"bdd4e4e2-194b-41c4-b0a9-c7889615720a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 2011, 54, 294, "Input",ExpressionUUID->"2fcac8a1-e787-43fe-8839-da985cca7134"],
+Cell[2590, 78, 166, 2, 33, "Output",ExpressionUUID->"054d70b2-e9c6-4b91-b987-84c89ff909ff"],
+Cell[2759, 82, 390, 9, 23, "Print",ExpressionUUID->"234cbaad-55a3-4a90-ba8c-0e9aa1734251"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
