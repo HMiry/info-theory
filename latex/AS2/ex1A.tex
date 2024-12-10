@@ -1,0 +1,28 @@
+\chapter{Exercise 1A : Evaluation of entropy of a discrete distribution}
+
+In this exercise we create a Matlab GUI app that allow users to specify a function and a range of value and then plot the function and the entropy of the corresponding probability distribution
+
+\section{Input processing}
+
+The string that describe the distribution is read from the appropriate text field and then used to get a function handle.
+The same is done for the string describing the range, that should be written spearating the lower and upper bounds of the range with a comma
+
+\section{Overview of the internal logic}
+
+The app start with some initialized value, and then update the entropy calculating each time the distribution or ranges are modified. The result is then shown in the non-editable text box besides the label "Entropy".
+
+Before calculating the result the app processes the inputs, writing an error message in the entropy text box if an error occours.
+An error can happen, for example, if the distribution string has an invalid syntax, or if the range delimiter is not the comma
+
+After the data are initialized, the following steps are performed
+
+\begin{itemize}
+	\item A vector of integers is created using the lower and upper bounds of the range
+	\item The distribution is applied piecewise to the vector, resulting in a vector of values
+	\item The resulting values are normalized, so they add up to 1
+	\item The entropy of the normalized vector is calculated and then shown inside the entropy text field  
+\end{itemize}
+
+\section{GUI example}
+
+\includegraphics[scale=0.8]{"images/ex1A_gui.png"}

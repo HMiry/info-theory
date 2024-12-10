@@ -1,0 +1,228 @@
+\chapter{Exercise 4A : Calculation of entropy of distributions}
+
+The goal of this exercise is to calculate the entropy of the given discrete distributions, providing an analytical solution, if it exists, or a numerical one.
+
+The distributions are the following
+
+\begin{itemize}
+	\item $ p(n) \propto e^{-\lambda n}  \qquad n = 0,1,2,3... $
+	\item $ p(n) \propto e^{-n^2} \qquad n = 0,1,2,3...$
+	\item $ p(n) \propto n^{-4} \qquad n = 1,2,3...$
+	\item $ p(n) \propto \alpha^{n} \qquad n = 1,...,N $
+	\item $ p(n) \propto (1 + n^2)^{-k} \qquad n = 0,1,2,... \qquad k = 1,2 $
+\end{itemize}
+
+\section{First distribution}
+
+The first thing we do is normalizing the distribution to make sure that all the elements add up to 1. To do this we calculate the sum of the series analytically
+
+\[ 
+	\sum_{n=0}^{\infty} e^{- \lambda n}
+\]
+
+This is the geometric series with ratio equals to $ e^{- \lambda n} $.
+This series only converge if the ratio absolute value is strictly less than 1, so the condition for convergence is
+\[ 
+	  |e^{- \lambda}| < 1   \Longrightarrow  \lambda > 0
+\]
+
+The sum of the distribution is calculated with the formula for calculating the sum of a geometric series, substituting the ratio $r$ with 
+$e^{- \lambda}$
+
+\[ 
+	\sum_{n=0}^{\infty} e^{- \lambda n} =
+	\frac{1}{1 - r} = \frac{1}{1 - e^{- \lambda}} =
+	\frac{e^{\lambda}}{e^{\lambda} - 1}
+\]
+To normalize the distribution, we divide it for the inverse of the sum, so that the resuting series will add up to 1, so we obtain the following probability distribution
+\[ 
+	p(n) =
+	\frac{e^{\lambda} - 1}{e^{\lambda}} \cdot e^{- \lambda n} =
+	(1 - e^{-\lambda}) \cdot e^{- \lambda n}
+\]
+To calculate the entropy of the normalized distribution, we use the formula for calculating the entropy and apply basic logarithm properties to obtain
+
+\[ 
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	- \sum_{n=0}^{\infty} 
+		(1 - e^{-\lambda}) \cdot e^{- \lambda n}
+	\cdot \log_2[
+		(1 - e^{-\lambda}) \cdot e^{- \lambda n}
+	] =
+\]
+\[ 
+	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
+	\sum_{n=0}^{\infty}  e^{- \lambda n}
+	\cdot 
+		[ \ln(1 - e^{-\lambda}) - \lambda n]
+	= 
+	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
+	\left[ 
+		\ln(1 - e^{-\lambda}) 
+		\sum_{n=0}^{\infty} 
+		e^{-\lambda n} -
+		\lambda \sum_{n=0}^{\infty}
+		n \cdot e^{-\lambda n}
+	\right]
+\]
+\[ 
+	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
+	\left[ 
+		\frac{\ln(1 - e^{-\lambda})}{1 - e^{-\lambda}} -
+		\lambda \sum_{n=0}^{\infty}
+		n \cdot e^{-\lambda n}
+	\right] =
+	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
+	\left[ 
+	\frac{\ln(1 - e^{-\lambda})}{1 - e^{-\lambda}} -
+	\frac{\lambda e^{-\lambda}}{(1 - e^{-\lambda})^2}
+	\right]
+\]
+\[
+	H =
+	\frac{
+		(1 - e^{\lambda}) \cdot \ln(e^{\lambda} - 1) +
+		\lambda e^{\lambda}
+	}	
+	{
+		\ln(2) \cdot (e^{\lambda} - 1)
+	}
+\]
+
+\subsection{Numerical examples}
+
+To verify the results, we run numerical examples choosing some values for $\lambda$. \newline
+First, we set $\lambda = 1$ and we obtain the following distribution
+\[ 
+	p(n) =
+	\frac{e - 1}{e} \cdot e^{-n} =
+	(1 - e^{-1}) \cdot e^{-n}
+\]
+Substituting $\lambda = 1$ in the analytical solution for the entropy we obtain
+\[
+	H = \frac{(1 - e) \cdot \ln(e - 1) + e}
+	{\ln(2) \cdot (e - 1)} \approx 1.5013
+\]
+We compare this result to the one obtained evaluating the formula for the entropy up to the 100th term and see that it matches
+\[
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	\sum_{n=0}^{\infty} (1 - e^{-1})\cdot e^{-n} \cdot
+	\log_2((1 - e^{-1}) \cdot e^{-n}) \approx 1.5013
+\]
+Substituting $\lambda = 2$ we obtain the following distribution and entropy
+\[
+	p(n) = \frac{e^2 - 1}{e^2} \cdot e^{-2n} =
+	(1 - e^{-2}) \cdot e^{-2n}
+\]
+\[
+	H = \frac{(1 - e^2) \cdot \ln(e^2 - 1) + 2e^2}
+	{\ln(2) \cdot (e^2 - 1)} \approx 0.6614
+\]
+We can see that the analytical solution is verified in this case too
+\[
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	\sum_{n=0}^{\infty} (1 - e^{-2})\cdot e^{-2n} \cdot
+	\log_2((1 - e^{-2}) \cdot e^{-2n}) \approx 0.6614
+\]
+
+\section{Second distribution}
+
+For the second distribution, we again start with normalizing the distribution, but this time there is no analytical for its sum, even if the series converge
+\[
+	\sum_{n=0}^{\infty} e^{-n^2} \approx 1.3863
+\]
+We use the numerical approximation as the normalizing factor and obtain
+\[
+	p(n) = \frac{1}{1.3863} \cdot e^{-n^2}
+\]
+Then we calculate the entropy using the formula and then doing some simplifications changing the logaritm base and applying logaritm properties
+\[
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	- \frac{1}{1.3863} \sum_{n=0}^{\infty} e^{-n^2} \cdot 
+	log2\left(\frac{1}{1.3863} \cdot e^{-n^2}\right) =
+\]
+\[
+	- \frac{1}{1.3863 \cdot \ln(2)} \sum_{n=0}^{\infty} e^{-n^2} 
+	 \left[ \ln \left(\frac{1}{1.3863}\right) - n^2 \right]
+	 \approx 0.9315
+\]
+
+\section{Third distribution}
+
+We calculate the sum of the distribution analytically
+
+\[ 
+	\sum_{n=1}^{\infty} n^{-4} = \frac{\pi^4}{90}
+\]
+The normalized distribution is
+
+\[ 
+	p(n) = \frac{90}{\pi^4 \cdot n^4}
+\]
+There is no closed form for the entropy of this distribution, so we calculate it numerically
+\[
+	H = - \sum_{n=1}^{\infty} \frac{90}{\pi^4 \cdot n^4} \cdot 
+	\log_2\left(\frac{90}{\pi^4 \cdot n^4}\right) \approx 0.4816
+\]
+
+\section{Fourth distribution}
+
+For the fourth distribution, we consider the cases of the parameter $\alpha$ being equal or different to 1
+
+\subsection{Case $\alpha = 1$}
+
+If $\alpha = 1$ then the sum of the distribution is trivially $N$, so the normalized distribution is a vector of $N$ elements all equals to $1/N$. The entropy is then 
+\[ 
+	H = - \sum_{i=1}^{N} \frac{1}{N} \cdot \log_2\left(\frac{1}{N}\right)
+	= - \log_2 \left(\frac{1}{N}\right) = \log_2(N)
+\]
+This value is also the maximum possible value for the entropy of a distribution of $N$ values
+
+\subsection{Case $\alpha \ne 1$}
+
+If $\alpha \ne 1$ then the sum of the distribution is calculated using the formula for the sum of a finite geometric series with ratio $\alpha$
+
+\[ 
+	\sum_{n=1}^{N} \alpha^n = 
+	\frac{\alpha \cdot (\alpha^N - 1)}{\alpha - 1}
+\]
+So the normalized distribution is
+
+\[ 
+	p(n) = \frac{\alpha - 1}{\alpha \cdot (\alpha^N - 1)} \cdot
+		\sum_{n=1}^{N} \alpha^n
+\]
+The entropy is then
+\[ 
+	H = \sum_{n=1}^{N} p(n) \cdot \log_2(p(n)) =
+\]
+
+\section{Fifth distribution}
+
+This distribution has two subcases, the one where $k = 1$ and the one where $k = 2$
+
+\subsection{Case $k=1$}
+In this case, the sum of the distribution has a closed form that can be expressed using hyperbolic functions
+
+\[ 
+	\sum_{n=0}^{\infty} \frac{1}{1 + n^2} = 
+	\frac{1 + \pi \coth(\pi)}{2}
+	\approx 2.0766
+\]
+The normalized distribution so is 
+\[ 
+	p(n) = \frac{2}{1 + \pi \coth(\pi)} \cdot
+		\frac{1}{1 + n^2}
+\]
+The entropy of the normalized distribution is
+
+\[ 
+	H = \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+\]
+
+\subsection{Case $k=2$}
+In this case too, the sum of the distribution has a closed form that can be expressed using hyperbolic functions
+\[ 
+	\sum_{n=0}^{\infty} \frac{1}{(1 + n^2)^2} = 
+\]
+
