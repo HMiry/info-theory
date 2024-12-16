@@ -1,26 +1,28 @@
 \chapter{Exercise 1A : Evaluation of entropy of a discrete distribution}
 
-In this exercise we create a Matlab GUI app that allow users to specify a function and a range of value and then plot the function and the entropy of the corresponding probability distribution
+In this exercise we create a Matlab GUI app that allows users to specify a function and a range of value and then plot the the corresponding probability distribution and calculate it's entropy value
 
-\section{Input processing}
+\section{Input data}
 
-The string that describe the distribution is read from the appropriate text field and then used to get a function handle.
-The same is done for the string describing the range, that should be written spearating the lower and upper bounds of the range with a comma
+The string that describe the distribution is read from the appropriate text field. It should be written in a syntax that Matlab can recognize, using the letter $n$ to represent the variable of the function
 
-\section{Overview of the internal logic}
+The string describing the range is read from the correspondent text field and should be written spearating the lower and upper bounds of the range with a comma
 
-The app start with some initialized value, and then update the entropy calculating each time the distribution or ranges are modified. The result is then shown in the non-editable text box besides the label "Entropy".
+\section{Internal logic}
 
-Before calculating the result the app processes the inputs, writing an error message in the entropy text box if an error occours.
-An error can happen, for example, if the distribution string has an invalid syntax, or if the range delimiter is not the comma
+The app start with some initialized value, and then updates the entropy value each time the distribution or range are modified. The result is then shown in the non-editable text box besides the label "Entropy".
+
+Before calculating the result the app processes the inputs, writing an error message in the entropy text box if an error occours, for example, if the distribution string has an invalid syntax, or if the range delimiter is not the comma
 
 After the data are initialized, the following steps are performed
 
 \begin{itemize}
+	\item The distribution string is used to create a function handle for the distribution
 	\item A vector of integers is created using the lower and upper bounds of the range
 	\item The distribution is applied piecewise to the vector, resulting in a vector of values
-	\item The resulting values are normalized, so they add up to 1
-	\item The entropy of the normalized vector is calculated and then shown inside the entropy text field  
+	\item The resulting values are normalized, so that they add up to 1
+	\item The normalized probability distribution is plotted in the graph
+	\item The entropy of the probability distribution is calculated and then shown inside the entropy text field  
 \end{itemize}
 
 \section{GUI example}

@@ -20,8 +20,8 @@ The first thing we do is normalizing the distribution to make sure that all the 
 	\sum_{n=0}^{\infty} e^{- \lambda n}
 \]
 
-This is the geometric series with ratio equals to $ e^{- \lambda n} $.
-This series only converge if the ratio absolute value is strictly less than 1, so the condition for convergence is
+This is a geometric series with ratio equal to $ e^{- \lambda n} $.
+This series only converge if the absolute value of the ratio is strictly less than 1, so the condition for convergence is
 \[ 
 	  |e^{- \lambda}| < 1   \Longrightarrow  \lambda > 0
 \]
@@ -41,7 +41,6 @@ To normalize the distribution, we divide it for the inverse of the sum, so that 
 	(1 - e^{-\lambda}) \cdot e^{- \lambda n}
 \]
 To calculate the entropy of the normalized distribution, we use the formula for calculating the entropy and apply basic logarithm properties to obtain
-
 \[ 
 	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
 	- \sum_{n=0}^{\infty} 
@@ -56,28 +55,57 @@ To calculate the entropy of the normalized distribution, we use the formula for 
 	\cdot 
 		[ \ln(1 - e^{-\lambda}) - \lambda n]
 	= 
+\]
+\[
 	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
 	\left[ 
 		\ln(1 - e^{-\lambda}) 
 		\sum_{n=0}^{\infty} 
 		e^{-\lambda n} -
 		\lambda \sum_{n=0}^{\infty}
-		n \cdot e^{-\lambda n}
-	\right]
-\]
-\[ 
-	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
-	\left[ 
-		\frac{\ln(1 - e^{-\lambda})}{1 - e^{-\lambda}} -
-		\lambda \sum_{n=0}^{\infty}
-		n \cdot e^{-\lambda n}
+		n e^{-\lambda n}
 	\right] =
+\]
+The first series has already been solved, the second one can be solved differentiating the geometric series in the following manner
+
+\[ 
+	\frac{d}{dr} \sum_{n=0}^{\infty} r^n =
+	\frac{d}{dr} \left(
+	\frac{1}{1 - r}
+	\right)
+	\rightarrow
+	\sum_{n=0}^{\infty} nr^{n-1} =
+	\frac{1}{(1 - r)^2}
+	\rightarrow
+	\sum_{n=0}^{\infty} nr^n =
+	\frac{r}{(1 - r)^2}
+\]
+Substituting $e^{-\lambda}$ for $r$ in the solution we obtain
+\[ 
 	- \frac{1 - e^{-\lambda}}{\ln(2)}  \cdot 
 	\left[ 
 	\frac{\ln(1 - e^{-\lambda})}{1 - e^{-\lambda}} -
 	\frac{\lambda e^{-\lambda}}{(1 - e^{-\lambda})^2}
-	\right]
+	\right] =
+	- \frac{\ln(1 - e^{-\lambda})}{\ln(2)}
+	+ \frac{\lambda e^{-\lambda}}
+	{\ln(2) (1 - e^{-\lambda}) } = 
 \]
+\[ 
+	- \frac{\ln(e^{\lambda} - 1) - \lambda}
+	{\ln(2)}
+	+ \frac{\lambda}
+	{\ln(2) (e^{\lambda} - 1) } =
+	\frac{
+		(1 - e^{\lambda})
+		\left[
+			\ln(e^{\lambda} - 1) - \lambda
+		\right]
+		+ \lambda
+	}
+	{\ln(2) \cdot (e^{\lambda} - 1)}
+\]
+
 \[
 	H =
 	\frac{
@@ -103,7 +131,8 @@ Substituting $\lambda = 1$ in the analytical solution for the entropy we obtain
 	H = \frac{(1 - e) \cdot \ln(e - 1) + e}
 	{\ln(2) \cdot (e - 1)} \approx 1.5013
 \]
-We compare this result to the one obtained evaluating the formula for the entropy up to the 100th term and see that it matches
+We compare this result to the one obtained using the formula for the entropy and adding the first 100 terms, and we see that it matches
+
 \[
 	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
 	\sum_{n=0}^{\infty} (1 - e^{-1})\cdot e^{-n} \cdot
@@ -127,7 +156,7 @@ We can see that the analytical solution is verified in this case too
 
 \section{Second distribution}
 
-For the second distribution, we again start with normalizing the distribution, but this time there is no analytical for its sum, even if the series converge
+For the second distribution, we again start with normalizing the distribution, but this time there is no analytical form for its sum, even if the series converge
 \[
 	\sum_{n=0}^{\infty} e^{-n^2} \approx 1.3863
 \]
@@ -135,7 +164,8 @@ We use the numerical approximation as the normalizing factor and obtain
 \[
 	p(n) = \frac{1}{1.3863} \cdot e^{-n^2}
 \]
-Then we calculate the entropy using the formula and then doing some simplifications changing the logaritm base and applying logaritm properties
+The entropy of this distribution has no analytical form either, so we apply the formula and get a numerical approximation 
+
 \[
 	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
 	- \frac{1}{1.3863} \sum_{n=0}^{\infty} e^{-n^2} \cdot 
@@ -149,12 +179,14 @@ Then we calculate the entropy using the formula and then doing some simplificati
 
 \section{Third distribution}
 
-We calculate the sum of the distribution analytically
+We calculate the sum of the distribution analytically, considering that the distribution is equal to the Riemann zeta function for $\zeta = 4$. There is a formula to calculate the value of the Riemann zeta function for even integers using the numbers of Bernoulli, so we get
 
 \[ 
-	\sum_{n=1}^{\infty} n^{-4} = \frac{\pi^4}{90}
+	\sum_{n=1}^{\infty} n^{-4} = \zeta(4) = 
+	(-1)^{3} \cdot \frac{B_4(2\pi)^4}{2 \cdot 4!} = 
+	\frac{\pi^4}{90} \approx 1.0823
 \]
-The normalized distribution is
+The normalized distribution is then
 
 \[ 
 	p(n) = \frac{90}{\pi^4 \cdot n^4}
@@ -162,7 +194,19 @@ The normalized distribution is
 There is no closed form for the entropy of this distribution, so we calculate it numerically
 \[
 	H = - \sum_{n=1}^{\infty} \frac{90}{\pi^4 \cdot n^4} \cdot 
-	\log_2\left(\frac{90}{\pi^4 \cdot n^4}\right) \approx 0.4816
+	\log_2\left(\frac{90}{\pi^4 \cdot n^4}\right) =
+	- \frac{90}{\pi^4 \cdot \ln(2)} \cdot
+	\sum_{n=1}^{\infty}
+	\frac{\ln(90) - 4\ln(\pi) - 4\ln(n)} {n^4} = 
+\]
+\[ 
+	- \frac{90}{\pi^4 \cdot \ln(2)} \cdot
+	\left\{
+	\left[ \ln(90) - 4\ln(\pi) \right] \zeta(4) -
+	4 \sum_{n=1}^{\infty}
+	\frac{\ln(n)}{n^4}
+	\right\}
+	\approx 0.4816
 \]
 
 \section{Fourth distribution}
@@ -180,10 +224,11 @@ This value is also the maximum possible value for the entropy of a distribution 
 
 \subsection{Case $\alpha \ne 1$}
 
-If $\alpha \ne 1$ then the sum of the distribution is calculated using the formula for the sum of a finite geometric series with ratio $\alpha$
+If $\alpha \ne 1$ then the sum of the distribution can be calculated using the formula for the sum of a finite geometric series with ratio $\alpha$, and substracting 1, since this series starts at the index 1, so it lacks the term $\alpha^0 = 1$
 
 \[ 
 	\sum_{n=1}^{N} \alpha^n = 
+	\frac{\alpha^{N+1} - 1}{\alpha - 1} - 1 =
 	\frac{\alpha \cdot (\alpha^N - 1)}{\alpha - 1}
 \]
 So the normalized distribution is
@@ -214,15 +259,93 @@ The normalized distribution so is
 	p(n) = \frac{2}{1 + \pi \coth(\pi)} \cdot
 		\frac{1}{1 + n^2}
 \]
-The entropy of the normalized distribution is
+The entropy of the normalized distribution doesen't have a closed form, so we have to calculate it numerically
 
 \[ 
-	H = \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	K = \frac{2}{1 + \pi \coth(\pi)}
 \]
+\[ 
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	-  \sum_{n=0}^{\infty} \frac{K}{1 + n^2} \cdot
+	\left[
+	\log_2\left(\frac{K}{1 + n^2}\right) 
+	\right] = 
+\]
+
+\[ 
+	- K	\sum_{n=0}^{\infty} \frac{1}{1 + n^2} \cdot
+	\left[
+	\log_2(K)- \log_2(1 + n^2)
+	\right] =
+\]
+
+\[ 
+	- K \cdot \log_2(K) \cdot 
+	\sum_{n=0}^{\infty} \frac{1}{1 + n^2}
+	+ K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)}{1 + n^2} =
+\]
+\[ 
+	- K \cdot \log_2(K) \cdot 
+	\frac{1}{K}
+	+ K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)}{1 + n^2} = 
+	- \log_2(K)
+	+ K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)}{1 + n^2}
+	\approx 2.5597
+\]
+
 
 \subsection{Case $k=2$}
 In this case too, the sum of the distribution has a closed form that can be expressed using hyperbolic functions
 \[ 
-	\sum_{n=0}^{\infty} \frac{1}{(1 + n^2)^2} = 
+	\sum_{n=0}^{\infty} \frac{1}{(1 + n^2)^2} 
+	= \frac{2 + \pi^2 \coth^2(\pi) + \pi \coth(\pi) - \pi^2}
+	{4} \approx 1.3068
+\]
+The normalized distribution function is
+
+\[ 
+	p(n) = \frac {4} {2 + \pi^2 \coth^2(\pi) + \pi \coth(\pi) - \pi^2} \cdot
+	\frac{1}{(1 + n^2)^2}
+\]
+The entropy of this distribution doesen't have a closed form, so it can only be calculated numerically
+
+\[ 
+	K = \frac {4} {2 + \pi^2 \coth^2(\pi) + \pi \coth(\pi) - \pi^2}
+\]
+
+\[ 
+	H = - \sum_{n=0}^{\infty} p(n) \cdot \log_2(p(n)) =
+	- \sum_{n=0}^{\infty} 
+	\frac{K}{(1 + n^2)^2} \cdot 
+	\log_2 \left[
+	\frac{K}{(1 + n^2)^2}
+	\right] =
+\]
+\[ 
+	- \sum_{n=0}^{\infty} 
+	\frac{K}{(1 + n^2)^2} \cdot
+	\left[
+		\log_2(K) - \log_2(1 + n^2)^2
+	\right] =
+\]
+\[ 
+	- K \cdot \log_2(K) \sum_{n=0}^{\infty}
+	\frac{1}{(1 + n^2)^2} +
+	K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)^2}{(1 + n^2)^2} =
+\]
+\[ 
+	- K \cdot \log_2(K) \cdot \frac{1}{K} +
+	K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)^2}{(1 + n^2)^2} =
+\]
+\[ 
+	- \log_2(K) +
+	K \sum_{n=0}^{\infty}
+	\frac{\log_2(1 + n^2)^2}{(1 + n^2)^2}
+	\approx 1.011
 \]
 
