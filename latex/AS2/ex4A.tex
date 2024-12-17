@@ -211,7 +211,9 @@ There is no closed form for the entropy of this distribution, so we calculate it
 
 \section{Fourth distribution}
 
-For the fourth distribution, we consider the cases of the parameter $\alpha$ being equal or different to 1
+The fourth distribution depends on a real parameter $\alpha$ that is used as base for an exponentiation.
+Since probabilities need to be positive, in order to guarantee that this basic property is satisifed $\alpha$ must be strictly positive itself \newline
+We consider the cases of the parameter $\alpha$ being equal or different to 1
 
 \subsection{Case $\alpha = 1$}
 
@@ -224,7 +226,7 @@ This value is also the maximum possible value for the entropy of a distribution 
 
 \subsection{Case $\alpha \ne 1$}
 
-If $\alpha \ne 1$ then the sum of the distribution can be calculated using the formula for the sum of a finite geometric series with ratio $\alpha$, and substracting 1, since this series starts at the index 1, so it lacks the term $\alpha^0 = 1$
+If $\alpha \ne 1$ then the sum of the distribution can be calculated using the formula for the sum of a finite geometric sequence with ratio $\alpha$, and substracting 1, since this series starts at the index 1, so it lacks the term $\alpha^0 = 1$
 
 \[ 
 	\sum_{n=1}^{N} \alpha^n = 
@@ -234,12 +236,101 @@ If $\alpha \ne 1$ then the sum of the distribution can be calculated using the f
 So the normalized distribution is
 
 \[ 
-	p(n) = \frac{\alpha - 1}{\alpha \cdot (\alpha^N - 1)} \cdot
-		\sum_{n=1}^{N} \alpha^n
+	p(n) = \frac{\alpha - 1}{\alpha \cdot (\alpha^N - 1)} \cdot \alpha^n
 \]
-The entropy is then
+The entropy is then calculated as follows
 \[ 
-	H = \sum_{n=1}^{N} p(n) \cdot \log_2(p(n)) =
+	K = \frac{\alpha - 1}{\alpha \cdot (\alpha^N - 1)}
+\]
+\[ 
+	H =
+	- \sum_{n=1}^{N} K \alpha^n \cdot \log_2
+	\left(
+		K \alpha^n
+	\right) =
+	- \sum_{n=1}^{N} K \alpha^n \cdot
+	\left[
+	\log_2(K) + n\log_2(\alpha)
+	\right] =
+\]
+\[ 
+	- K \log_2(K) \sum_{n=1}^{N} \alpha^n
+	- K \log_2(\alpha)
+	\sum_{n=1}^{N} n\alpha^n
+\]
+The first sum has already been solved, while the second can be solved differentiating the finite geometric sum in the following manner
+\[
+	\frac{d}{d\alpha} \sum_{n=1}^{N} \alpha^n =
+	\frac{d}{d\alpha} 
+	\left[
+		\frac{\alpha \cdot (\alpha^N - 1)}{\alpha - 1}
+	\right]
+	\rightarrow
+	\sum_{n=1}^{N} n \alpha^{n-1} =
+	\frac{N\alpha^{N+1} - (N+1)\alpha^N + 1}
+	{(\alpha - 1)^2}
+\]
+\[ 
+	\sum_{n=1}^{N} n \alpha^n =
+	\frac{N\alpha^{N+2} - (N+1)\alpha^{N+1} + \alpha}
+	{(\alpha - 1)^2}
+\]
+Substituting this into the entropy formula we obtain
+
+\[ 
+	H = - K \log_2(K) \cdot \frac{1}{K}
+	- K \log_2(\alpha) \cdot
+	\frac{N\alpha^{N+2} - (N+1)\alpha^{N+1} + \alpha}
+	{(\alpha - 1)^2} =
+\]
+\[ 
+	- \log_2(K) - \log_2(\alpha) \cdot
+	\frac{\alpha - 1}{\alpha \cdot (\alpha^N - 1)} \cdot
+	\frac{N\alpha^{N+2} - (N+1)\alpha^{N+1} + \alpha}
+	{(\alpha - 1)^2} = 
+\]
+\[ 
+	- \log_2(K) - \log_2(\alpha) \cdot
+	\frac{N\alpha^{N+2} - (N+1)\alpha^{N+1} + \alpha}
+	{\alpha \cdot (\alpha^N - 1) \cdot (\alpha - 1)}
+\]
+
+\subsection{Numerical example}
+
+To test the analytical formula we got, we test it using the values $\alpha = 1/2$ and $N=3$
+
+\[ 
+	K = \frac{1/2 - 1}{1/2 \cdot (1/8 - 1)} = \frac{8}{7}
+\]
+The probability values are
+
+\[
+	\frac{8}{7} \cdot \left(
+	\frac{1}{2} \right)^n =
+	 \left[
+	 	\frac{8}{14},
+	 	\frac{8}{28},
+	 	\frac{8}{56}
+	 \right]
+\]
+Applying the formula for entropy we obtain
+
+\[ 
+	H
+	\left[
+	\frac{8}{14},
+	\frac{8}{28},
+	\frac{8}{56}
+	\right] \approx 1.3788
+\]
+Evaluating the analytical formula obtained earlier we get
+
+\[ 
+	H = - \log_2\left(\frac{8}{7}\right)
+	- \log_2\left(\frac{1}{2}\right) \cdot
+	\frac{3 \cdot 1/2^5 - 4 \cdot 1/2^4 + 1/2}
+	{1/2 \cdot (1/2^3 - 1) \cdot (1/2 - 1)}
+	\approx 1.3788
 \]
 
 \section{Fifth distribution}
@@ -310,7 +401,7 @@ The normalized distribution function is
 	p(n) = \frac {4} {2 + \pi^2 \coth^2(\pi) + \pi \coth(\pi) - \pi^2} \cdot
 	\frac{1}{(1 + n^2)^2}
 \]
-The entropy of this distribution doesen't have a closed form, so it can only be calculated numerically
+Like the precedent case, the entropy of this distribution doesen't have a closed form, so it can only be calculated numerically
 
 \[ 
 	K = \frac {4} {2 + \pi^2 \coth^2(\pi) + \pi \coth(\pi) - \pi^2}
