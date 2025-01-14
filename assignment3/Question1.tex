@@ -147,6 +147,7 @@ The Diffle-Hellman algorithm for exchanging keys works by choosing the following
 The group and the generator are public and are called the parameters of the exchange
 
 Assuming that the two partecipants private keys are calles $x$ and $y$, the first partecipant computes $g^x$ and send it to other, while the other does the same with the value $g^y$
+\newline
 Then each partecipant computes $(g^x)^y$ using their own private keys
 \newline
 The two values $g^x$ and $g^y$ are the publc keys, and the strength of the protocol is due to the difficulty of finding $x$ knowing $g^x$ modulo $n$, which is called discrete logarithm
@@ -159,9 +160,7 @@ Forward secrecy is a property of key exchange protocols, that is verified when t
 
 For example, in a RSA or Diffle-Hellman keys exchange, when the session keys are generated from long-term public and private keys used by the server, if the server private keys are compromised, so are all the past communications where those keys were used
 
-\hfill
-
 To avoid this TLS supports the Ephemereal Diffle-Hellman exchange (DHE) \newline
-In this key exchange, the server generate a private and public DH key for each session, signing them with the key provided in the certificate
+In this key exchange, the server generate a private and public DH key for each session, signing them with the key provided in the certificate. So, even if the server private key is stolen, stored communications can't be decrypted, since the private keys is only used to sign the session keys, which are deleted after each session
 	
 \end{frame}
