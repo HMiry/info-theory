@@ -37,6 +37,7 @@
 	
 	TLS until 1.2 supports Cipher Block Chaining as encrpyption mode for block ciphers, while TLS 1.3 only support CCM mode and GCM, that offer authentication other than encryption
 	
+	TLS also supports Pre Shared Keys to be used for encryption or authentication
 	
 \end{frame}
 
@@ -51,7 +52,7 @@ The first step is the ClientHello message, sent by the client to the server, whi
 	\item A session ID. If the client and the server established a session before, the client can send the ID to resume the previous session
 	\item A random value generated with a secure random generator
 	\item The list of ciphers that are supported by the client
-	\item A list of compression algorithms supported by the client. In the TLS 1.3 version this has to be set to zero
+	\item A list of compression algorithms supported by the client. In the TLS 1.3 version this has to be set to null
 \end{itemize}
 	
 \end{frame}
@@ -89,6 +90,8 @@ The server authentication is done with a digital certificate, that contains
 
 The client verifies that the certificate is not expired, that the signature is valid and that the Certificate Authority is trusted.
 If everything is okay, the connection continue
+
+The server can optionally request client authentication, which works in the same way
 
 	
 \end{frame}
@@ -158,16 +161,7 @@ For example, in a RSA or Diffle-Hellman keys exchange, when the session keys are
 
 \hfill
 
-To avoid this TLS uses the Ephemereal Diffle-Hellman exchange (DHE) \newline
+To avoid this TLS supports the Ephemereal Diffle-Hellman exchange (DHE) \newline
 In this key exchange, the server generate a private and public DH key for each session, signing them with the key provided in the certificate
-
-
-To provide forward secrecy, in TLS 1.3 the only key exchange allowed is the DHE
 	
-\end{frame}
-
-\begin{frame}{TLS 1.3}
-
-
-
 \end{frame}
