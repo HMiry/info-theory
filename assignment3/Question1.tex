@@ -1,0 +1,166 @@
+\section{Question 1: The TLS Protocol}
+
+\begin{frame}{The TLS Protocol}
+	
+	The TLS protocol is a protocol that uses cryptography to protect communications that would otherwise be in plaintext and could be eavesdropped or tampered with
+	
+	The protocol is usually applied on top on another insecure protocol, like HTTP, SMTP, or FTP, to add cryptography and secure the connection, and the resulting protocol is named adding an S to the original protocol name (es. HTTPS, FTPS, SMTPS)
+	
+	The protocol has undergone successive version, that are called 1.0, 1.1, 1.2 and the latest 1.3
+	
+	The TLS protocol protects the connection in the following ways
+	
+	\begin{itemize}
+		
+		\item Protection against eavesdropping, using a symmetric cipher to encrypt data with a key that is exchanged using an asymmetric algorithm
+		
+		\item Protection against tampering, using a MAC to verify the integrity of the data
+		
+		\item Protection against man in the middle attacks, using certificates to authenticate the server to the client
+	\end{itemize}
+	
+	
+\end{frame}
+
+\begin{frame}{Supported cipher suites}
+	
+	The cipher suites used in the TLS protocol are sets composed of the following algorithms
+	
+	\begin{itemize}
+		\item An algorithm used for exchanging keys, which can be RSA, Diffle-Hellman or Emphemereal Diffle-Hellmann
+		\item An algorithm used to authenticate the server, which can be RSA or DSS (Digital Signature Standard)
+		\item A symmetric cypher to encrypt the data, like AES, 3DES, ChaCha20, Camellia or RC4. 
+		\item A hash function used for verifying data integrity, like SHA-1 or SHA-256
+	\end{itemize}
+	
+	Symmetric ciphers are used to encrypt the data because they are faster, while the asymmetric ciphers are used to securely exchange the keys for the symmetric ciphers
+	
+	TLS until 1.2 supports Cipher Block Chaining as encrpyption mode for block ciphers, while TLS 1.3 only support CCM mode and GCM, that offer authentication other than encryption
+	
+	TLS also supports Pre Shared Keys to be used for encryption or authentication
+	
+\end{frame}
+
+\begin{frame}{TLS Handshake : ClientHello}
+	
+The TLS Handshake is the first part of a TLS session, in which the client and the server negotiate the session parameters, like the keys for encryption and MAC.
+
+The first step is the ClientHello message, sent by the client to the server, which contains some informations. The most important ones are
+
+\begin{itemize}
+	\item The version of TLS that the client want to use. It should be the highest version supported by the client
+	\item A session ID. If the client and the server established a session before, the client can send the ID to resume the previous session
+	\item A random value generated with a secure random generator
+	\item The list of ciphers that are supported by the client
+	\item A list of compression algorithms supported by the client. In the TLS 1.3 version this has to be set to null
+\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{TLS Handshake : ServerHello}
+	
+After the ClientHello, the server responds with a ServerHello, which contains 
+
+\begin{itemize}
+	\item The version of TLS that the server choose to use. It should be the highest the server supports among the ones proposed by the client
+	\item A session ID. If the server want to resume a previous session, it will be the same the client sent in the ClientHello
+	\item A random value generated with a secure random generator
+	\item The suite of ciphers chosen by the server, among the ones proposed by the client
+	\item The compression algorithm chosen by the server, which can be none
+\end{itemize}
+
+After the ServerHello, the server authenticates itself using a certificate issued by a CA (Certificate Authorithy) that the client trust, to avoid man in the middle attacks
+
+\end{frame}
+
+
+\begin{frame}{Server authentication}
+	
+The server authentication is initiated by the client using the Server Certificate message. It's not mandatory, since there are some cipher suites that don't require authentication.
+However, those are rarely used, as they are vulnerable to man in the middle attacks
+
+The server authentication is done with a digital certificate, that contains
+
+\begin{itemize}
+	\item The server fully qualified domain name
+	\item The server public key
+	\item An expiration date
+	\item A signature made by a Certificate Authority
+\end{itemize}
+
+The client verifies that the certificate is not expired, that the signature is valid and that the Certificate Authority is trusted.
+If everything is okay, the connection continue
+
+The server can optionally request client authentication, which works in the same way
+
+	
+\end{frame}
+
+\begin{frame}{Key exchange}
+	
+After the server authentication, the key exchange starts. The server provides information to be used for the exchange, if they are not already included in the certificate
+
+
+The client and the server generate a shared value called Pre-Master Secret
+
+\begin{itemize}
+	\item In the RSA exchange, the client generate a value and encrypt it with the RSA key provided in the server certificate. The server than decrypts it, and that value is the Pre-Master Secret
+	\item In the DH and DHE exchange, the client and the server perform a Diffle-Hellman exchange, whose result is the Pre-Master Secret
+\end{itemize}
+	
+After both parties have the Pre-Master Secret, they use it to compute a Master Secret using a Pseudo-Random function based on HMAC. The function takes as additional inputs the ClientHello and ServerHello random values. 
+The Master Secret is then used to derive four session keys: a server and client encryption keys and a server and client MAC keys
+	
+\end{frame}
+
+\begin{frame}{RSA problem}
+	
+The RSA algorithm works by choosing the following numbers
+
+\begin{itemize}
+	\item A number $n$ which is the product of two prime numbers
+	\item Two numbers $e$ and $d$ so that for every $m < n$ it's true that $(m^e)^d \equiv m \quad mod ~ n$
+\end{itemize}
+	
+The value $n$ is generated by multiplying two random prime numbers, while $e$ and $d$ can be computed efficiently using Euler totient function, if the prime factor of $n$ are known
+
+The value of $n$ and $e$ are the public key, while the value of $d$ is the private key.
+
+The encryption is performed computing $m^e$ modulo $n$, while the decryption is performed exponentiating the result to $d$, which gives back the value of $m$
+
+The strength of the RSA algorithm is based on the RSA problem: compute the $e$-th root of a given value, modulo $n$. The RSA problem is at least as easy as factorizing a large semiprime number.
+In fact, if $n$ can be factorized, its prime factors can be used to calculate $d$ with the same procedure used in the key generation process
+\newline
+It's not known if the RSA problem could be solved without factorizing $n$
+	
+\end{frame}
+
+\begin{frame}{Diffle-Hellman exchange}
+	
+The Diffle-Hellman algorithm for exchanging keys works by choosing the following 
+
+\begin{itemize}
+	\item A group and a generator for the group. In the base case, the group is $\mathbb{Z}_n$ and the generator is a number $g$ coprime with $n$
+	\item A secret number for each partecipant, which is the private key
+\end{itemize}
+
+The group and the generator are public and are called the parameters of the exchange
+
+Assuming that the two partecipants private keys are calles $x$ and $y$, the first partecipant computes $g^x$ and send it to other, while the other does the same with the value $g^y$
+\newline
+Then each partecipant computes $(g^x)^y$ using their own private keys
+\newline
+The two values $g^x$ and $g^y$ are the publc keys, and the strength of the protocol is due to the difficulty of finding $x$ knowing $g^x$ modulo $n$, which is called discrete logarithm
+	
+\end{frame}
+
+\begin{frame}{Forward secrecy}
+	
+Forward secrecy is a property of key exchange protocols, that is verified when the keys used in the session to encrypt data will not be compromised in the future, even if some long-term private keys used in the exchange are compromised
+
+For example, in a RSA or Diffle-Hellman keys exchange, when the session keys are generated from long-term public and private keys used by the server, if the server private keys are compromised, so are all the past communications where those keys were used
+
+To avoid this TLS supports the Ephemereal Diffle-Hellman exchange (DHE) \newline
+In this key exchange, the server generate a private and public DH key for each session, signing them with the key provided in the certificate. So, even if the server private key is stolen, stored communications can't be decrypted, since the private keys is only used to sign the session keys, which are deleted after each session
+	
+\end{frame}
