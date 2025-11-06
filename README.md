@@ -115,13 +115,13 @@ This assignment implements interactive MATLAB GUI applications for entropy calcu
 ### Problem 1A: Discrete Random Variable Entropy Calculator
 **File:** `ES1A.mlapp`
 
-Interactive GUI for calculating Shannon entropy H(X) = -Σ p(x) log₂(p(x)) of discrete random variables.
+Interactive GUI for calculating Shannon entropy of discrete random variables.
 
 **Features:**
 - Input probability vector for n discrete outcomes
-- Automatic validation (Σpᵢ = 1, all pᵢ ≥ 0)
+- Automatic validation that probabilities sum to 1 and are non-negative
 - Real-time entropy calculation
-- PMF visualization (bar chart)
+- PMF visualization with bar chart
 - Support for arbitrary number of outcomes
 
 **Key Concepts:** Shannon entropy, discrete probability distributions, maximum entropy principle
@@ -131,15 +131,15 @@ Interactive GUI for calculating Shannon entropy H(X) = -Σ p(x) log₂(p(x)) of 
 ### Problem 2A: Channel Capacity Calculator
 **File:** `ex2_a.mlapp`
 
-GUI for calculating channel capacity C = max I(X;Y) given a transition probability matrix P.
+GUI for calculating channel capacity given a transition probability matrix.
 
 **Features:**
-- Input transition probability matrix P(Y|X)
-- Iterative optimization (Blahut-Arimoto algorithm)
-- Outputs: channel capacity, optimal input distribution
+- Input transition probability matrix
+- Iterative optimization using Blahut-Arimoto algorithm
+- Outputs channel capacity and optimal input distribution
 - Convergence visualization
 
-**Test Cases:** Binary symmetric channel (BSC), binary erasure channel (BEC), noiseless channel
+**Test Cases:** Binary symmetric channel, binary erasure channel, noiseless channel
 
 **Key Concepts:** Channel capacity, mutual information, optimization algorithms
 
@@ -152,14 +152,14 @@ GUI for analyzing entropy rate of ASCII text through n-gram analysis.
 
 **Features:**
 - Multi-line text input
-- Configurable n-gram order (1-6+)
-- Computes entropy rate: H_rate = H(Xⁿ) / n
+- Configurable n-gram order (1 to 6 or more)
+- Computes entropy rate per symbol
 - Outputs decreasingly sorted probability distribution
 - Comparison across different orders
 
 **Analysis:**
 - Order 1: Individual character frequencies
-- Order 2+: Bigrams and higher-order dependencies
+- Order 2 and higher: Bigrams and higher-order dependencies
 - Demonstrates redundancy in natural language
 
 **Key Concepts:** Entropy rate, n-gram models, text compression, statistical language modeling
@@ -169,37 +169,36 @@ GUI for analyzing entropy rate of ASCII text through n-gram analysis.
 ### Problem 4A: Entropy of Specific Discrete Distributions
 **Deliverable:** Analytical and numerical solutions in LaTeX report
 
-For each distribution, determine analytical vs numerical solution approach:
+For each distribution, determine whether analytical or numerical solution is appropriate:
 
 #### 4A.1: Geometric-like Distribution
-p(x) ∝ exp(-αx), x = 0, 1, 2, ...
-- **Solution:** Analytical (geometric series)
-- **Entropy:** H(X) = [q log₂(q) - log₂(1-q)] / (1-q) where q = exp(-α)
-- **Parameter range:** α > 0
+Distribution proportional to exponential decay
+- **Solution:** Analytical using geometric series
+- **Parameter range:** Alpha greater than zero
 
 #### 4A.2: Gaussian-like Discrete Distribution
-p(x) ∝ exp(-x²), x = 0, 1, 2, ...
-- **Solution:** Numerical (rapidly converging series, truncate at x_max)
-- **Typical result:** H(X) ≈ 1.52 bits
+Distribution proportional to exponential of negative x-squared
+- **Solution:** Numerical (rapidly converging series, truncate at suitable maximum)
+- **Typical result:** Entropy approximately 1.52 bits
 
 #### 4A.3: Zipf Distribution
-p(x) ∝ x⁻ᵅ, x = 1, 2, 3, ...
+Distribution with power-law decay
 - **Solution:** Case-dependent
-  - α > 1: Semi-analytical using ζ(α) (Riemann zeta function)
-  - α ≤ 1: Numerical (series diverges, requires truncation)
-- **Applications:** Word frequencies, power laws
+  - For alpha greater than 1: Semi-analytical using Riemann zeta function
+  - For alpha less than or equal to 1: Numerical (series diverges, requires truncation)
+- **Applications:** Word frequencies, power laws in nature
 
 #### 4A.4: Finite Zipf Distribution
-p(x) ∝ x⁻ᵅ, x = 1, ..., N
+Power-law distribution over finite range
 - **Solution:** Analytical (finite sum)
-- **Special case:** α = 0 gives uniform, H(X) = log₂(N)
+- **Special case:** When alpha equals zero, reduces to uniform distribution
 
 #### 4A.5: Modified Geometric Distribution
-p(x) ∝ 1/(1+x)ᵅ, x = 0, 1, 2, ... for α = 1, 2
-- **α = 1:** Numerical (harmonic series diverges)
-- **α = 2:** Semi-analytical (Z = π²/6, numerical entropy calculation)
+Distribution with inverse power decay
+- **Case alpha = 1:** Numerical (harmonic series diverges)
+- **Case alpha = 2:** Semi-analytical (normalization constant is pi-squared over 6)
 
-**Deliverables:** Mathematical derivations, MATLAB/Python code, plots of H(X) vs parameters
+**Deliverables:** Mathematical derivations, MATLAB/Python code, plots of entropy vs parameters
 
 ---
 
@@ -208,19 +207,19 @@ p(x) ∝ 1/(1+x)ᵅ, x = 0, 1, 2, ... for α = 1, 2
 ### Problem 1B: Differential Entropy Calculator
 **File:** `ex3_b.mlapp`
 
-GUI for computing differential entropy h(X) = -∫ f(x) log₂(f(x)) dx.
+GUI for computing differential entropy of continuous random variables.
 
 **Features:**
 - Common distributions dropdown (Uniform, Gaussian, Exponential, Laplace)
 - Custom symbolic expression input
-- Integration range: (-∞, +∞) or finite bounds
+- Integration range selection (infinite or finite bounds)
 - Symbolic and numerical integration methods
 - PDF visualization and normalization check
 
-**Known Formulas:**
-- Uniform [a,b]: h(X) = log₂(b-a)
-- Gaussian N(μ,σ²): h(X) = ½ log₂(2πeσ²)
-- Exponential Exp(λ): h(X) = log₂(e/λ)
+**Known Results:**
+- Uniform distribution: entropy is logarithm of interval width
+- Gaussian distribution: entropy depends on variance
+- Exponential distribution: entropy depends on rate parameter
 
 **Key Concepts:** Differential entropy, continuous probability, numerical integration
 
@@ -229,19 +228,19 @@ GUI for computing differential entropy h(X) = -∫ f(x) log₂(f(x)) dx.
 ### Problem 2B: Lloyd-Max Quantizer Algorithm
 **Implementation:** GUI or documented Jupyter Notebook
 
-Optimal scalar quantization algorithm minimizing mean-squared error (MSE).
+Optimal scalar quantization algorithm minimizing mean-squared error.
 
-**Algorithm:**
-1. **Nearest Neighbor:** Assign points to closest quantization level
-2. **Centroid Update:** qᵢ = E[X | tᵢ₋₁ < X ≤ tᵢ]
+**Algorithm Steps:**
+1. **Nearest Neighbor:** Assign input values to closest quantization level
+2. **Centroid Update:** Compute optimal quantization levels as conditional expectations
 3. **Iterate** until convergence
 
 **Features:**
-- Input: PDF, number of levels K
+- Input: PDF specification and number of quantization levels
 - Outputs: optimal quantization levels, decision boundaries, minimum distortion
-- Visualizations: PDF with levels, quantizer function, convergence plot
+- Visualizations: PDF with levels overlay, quantizer staircase function, convergence plot
 
-**Test Cases:** Uniform (equally-spaced levels), Gaussian (more levels at center), Exponential (asymmetric)
+**Test Cases:** Uniform (equally-spaced levels), Gaussian (more levels at center), Exponential (asymmetric quantizer)
 
 **Key Concepts:** Quantization, Lloyd algorithm, rate-distortion theory
 
@@ -250,77 +249,86 @@ Optimal scalar quantization algorithm minimizing mean-squared error (MSE).
 ### Problem 3B: LBG Vector Quantization Algorithm
 **Implementation:** GUI or documented Jupyter Notebook
 
-2D vector quantization using Linde-Buzo-Gray algorithm (k-means clustering for vectors).
+2D vector quantization using Linde-Buzo-Gray algorithm (extension of k-means clustering).
 
-**Algorithm:**
-1. **Initialization:** K random codeword vectors (multiple trials)
-2. **Classification:** Assign grid points to nearest codeword
-3. **Centroid Update:** Recompute weighted centroids
+**Algorithm Steps:**
+1. **Initialization:** Generate initial codeword vectors (multiple random trials)
+2. **Classification:** Assign grid points to nearest codeword using Euclidean distance
+3. **Centroid Update:** Recompute codewords as weighted centroids of assigned points
 4. **Iterate** until convergence
 
 **PDF Discretization:**
-- Approximate f(x,y) on N×N grid
-- Grid points: xᵢ = xₘᵢₙ + i·Δₓ, yⱼ = yₘᵢₙ + j·Δᵧ
-- Probability masses: p(xᵢ,yⱼ) = f(xᵢ,yⱼ)·Δₓ·Δᵧ (normalized)
+- Approximate continuous 2D PDF on square grid
+- Grid with configurable resolution
+- Compute probability mass at each grid point
+- Normalize to ensure probabilities sum to one
 
 **Features:**
-- Input: 2D PDF, codebook size K, grid resolution
-- Multiple random initializations
-- Outputs: optimal codebook, minimum distortion
+- Input: 2D PDF, codebook size, grid resolution
+- Multiple random initializations to find global optimum
+- Outputs: optimal codebook, minimum distortion across trials
 
 **Visualizations:**
-1. Distortion vs trial number
-2. Optimal codebook with Voronoi regions on PDF contour
-3. Convergence curve
+1. Distortion vs trial number showing best initialization
+2. Optimal codebook points with Voronoi regions on PDF contour
+3. Convergence curve for best trial
 
-**Test Cases:** 2D Gaussian, mixture of Gaussians, uniform over region
+**Test Cases:** 2D Gaussian, mixture of Gaussians, uniform over bounded region
 
-**Key Concepts:** Vector quantization, k-means clustering, codebook design
+**Key Concepts:** Vector quantization, k-means clustering, codebook design, Voronoi regions
 
 ---
 
 ### Problem 4B: Differential Entropy of Specific Distributions
-**Files:** `ex4.1_b.nb`, `ex4.2_b.nb`, `ex4.3_b.nb` (Mathematica)
+**Files:** `ex4.1_b.nb`, `ex4.2_b.nb`, `ex4.3_b.nb` (Mathematica notebooks)
 
 Analytical derivations for three continuous distributions:
 
 #### 4B.1: Laplace Distribution
-f(x) = (λ/2) exp(-λ|x|), x ∈ (-∞, +∞)
-- **Entropy:** h(X) = log₂(2e/λ) = 1 + log₂(2/λ)
-- **Applications:** Robust statistics, image compression
+Double exponential distribution symmetric around zero
+- **Result:** Analytical entropy formula involving scale parameter
+- **Applications:** Robust statistics, image compression, sparse signal processing
 
 #### 4B.2: Gamma Distribution
-f(x) = (λᵏ/Γ(k)) xᵏ⁻¹ exp(-λx), x > 0
-- **Entropy:** h(X) = k + log₂(Γ(k)/λᵏ) + (1-k)·ψ(k)/log(2)
-- ψ(k) is digamma function
-- **Special case:** k=1 gives Exponential
+Generalized exponential distribution over positive reals
+- **Result:** Entropy formula involving shape and rate parameters, uses digamma function
+- **Special case:** When shape equals 1, reduces to exponential distribution
 
 #### 4B.3: Rayleigh Distribution
-f(x) = (x/σ²) exp(-x²/2σ²), x > 0
-- **Entropy:** h(X) = log₂(σ) + ½log₂(2πe) - ½
-- **Applications:** Wireless fading channels, magnitude of 2D Gaussian
+Distribution of magnitude of 2D Gaussian random vector
+- **Result:** Entropy formula with scale parameter
+- **Applications:** Wireless fading channels, wind speed modeling, signal processing
 
-**Deliverables:** Symbolic derivations, numerical verification, parameter analysis plots
+**Deliverables:** Complete symbolic derivations, numerical verification, parameter analysis plots
 
 ---
 
 ## Submission Requirements
 
 **Deliverables:**
-- All MATLAB `.mlapp` files or Python notebooks
-- Mathematica `.nb` files
-- LaTeX report as `group<number>.pdf`
-- Compress everything into `group<number>.zip`
+- All MATLAB `.mlapp` files or equivalent Python notebooks
+- Mathematica `.nb` files for Problem 4B
+- Comprehensive LaTeX report as `group<number>.pdf`
+- Everything compressed into `group<number>.zip`
 
 **Report Structure:**
 1. Introduction
-2-5. Part A Problems (1A-4A)
-6-9. Part B Problems (1B-4B)
+2. Part A - Problem 1 (Discrete Entropy GUI)
+3. Part A - Problem 2 (Channel Capacity)
+4. Part A - Problem 3 (Text Entropy Rate)
+5. Part A - Problem 4 (Discrete Distributions)
+6. Part B - Problem 1 (Differential Entropy GUI)
+7. Part B - Problem 2 (Lloyd-Max Algorithm)
+8. Part B - Problem 3 (LBG Algorithm)
+9. Part B - Problem 4 (Continuous Distributions)
 10. Conclusions and References
 
-**Submission:** Upload through Politecnico di Torino web portal (no email submissions).
+**Submission:** Upload through Politecnico di Torino web portal (no email submissions accepted).
 
-**Course:** Information Theory for Data Science, Prof. Giorgio Taricco, Politecnico di Torino - DET
+**Course Information:**
+- **Course:** Information Theory for Data Science
+- **Instructor:** Prof. Giorgio Taricco
+- **Institution:** Politecnico di Torino - DET
 
 ## 🔐 Assignment 3: Cryptography
 
